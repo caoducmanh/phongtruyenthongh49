@@ -1,0 +1,110 @@
+:root{
+  --bg: #0b1220;
+  --panel: #4684ff;
+  --panel2: #769fff;
+  --text: #e9eefc;
+  --muted: rgba(233,238,252,.75);
+  --border: rgba(255,255,255,.10);
+  --shadow: 0 12px 40px rgba(0,0,0,.45);
+  --accent: #7cc4ff;
+  --hotspot: #ffd166;
+}
+
+*{ box-sizing: border-box; }
+html, body, #root{ height: 100%; }
+
+body{
+  margin: 0;
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+  background: radial-gradient(1200px 600px at 30% 10%, rgba(124,196,255,.18), transparent 55%),
+              radial-gradient(900px 450px at 80% 30%, rgba(255,209,102,.12), transparent 60%),
+              var(--bg);
+  color: var(--text);
+  overflow: hidden;
+}
+
+.viewer-wrap{
+  position: relative;
+  height: 100%;
+  min-width: 0;
+}
+
+[id^="panorama-"]{
+  width: 100%;
+  height: 100%;
+  background: #ffffff;
+}
+
+/* Đẩy cụm control pannellum xuống */
+#panorama .pnlm-controls-container{
+  top: 100px !important;
+  left: 30px !important;
+}
+
+/* Hotspot style (giữ như cũ) */
+.artifact-hotspot{
+  width: 4px;
+  height: 4px;
+  border-radius: 10px;
+  background: radial-gradient(circle at 30% 30%, #fff7d6, var(--hotspot));
+  border: 2px solid rgba(0,0,0,35);
+  box-shadow: 0 0 0 5px rgba(255,209,102,15), 0 8px 20px rgba(0,0,0,45);
+  cursor: pointer;
+
+  /* ✅ bù tâm để điểm neo đúng tọa độ yaw/pitch */
+  margin-left: -8px;
+  margin-top: -8px;
+
+  /* (không cần position: relative cũng được, nhưng giữ lại vẫn ok) */
+  position: absolute;
+}
+
+.artifact-hotspot::after{
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 15px;
+  height: 15px;
+  transform: translate(-50%, -50%);
+  border-radius: 20px;
+  border: 1px solid rgba(255,209,102,.35);
+  opacity: .9;
+}
+
+.artifact-tooltip{
+  position: absolute;
+  left: 50%;
+  bottom: 24px;
+  transform: translateX(-50%);
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid var(--border);
+  color: var(--bg);
+  padding: 6px 8px;
+  border-radius: 10px;
+  font-size: 12px;
+  white-space: nowrap;
+  box-shadow: var(--shadow);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .12s ease;
+}
+
+.artifact-hotspot:hover .artifact-tooltip{
+  opacity: 1;
+}
+
+/* Ẩn title/scene title mặc định của Pannellum để khỏi đè UI MUI */
+.pnlm-title-box,
+.pnlm-title-box * {
+  display: none !important;
+}
+
+/* Dời nút fullscreen của Pannellum sang phải để không đè title */
+.pnlm-fullscreen-toggle-button{
+  left: auto !important;
+  right: 12px !important;
+  top: 12px !important;
+  z-index: 70 !important;
+}
+
